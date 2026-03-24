@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/Header";
 import { HeroSequence } from "@/components/hero/HeroSequence";
 import { HoverCard3D } from "@/components/cards/HoverCard3D";
 import { InteractiveCard } from "@/components/cards/InteractiveCard";
+import { ScrollProductDemo } from "@/components/sections/ScrollProductDemo";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
@@ -11,8 +13,6 @@ import {
   Shield,
   TrendingDown,
   Camera,
-  Eye,
-  DollarSign,
   ChevronRight,
   BarChart3,
   RotateCcw,
@@ -115,7 +115,7 @@ export default function HomePage() {
         <div className="absolute top-1/2 left-[20%] -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(249,115,22,0.07),_transparent_60%)] pointer-events-none" />
         <div className="absolute top-1/3 right-[10%] w-[400px] h-[400px] bg-[radial-gradient(circle,_rgba(6,182,212,0.04),_transparent_60%)] pointer-events-none" />
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
+        <ScrollReveal className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
           <div className="grid gap-12 lg:grid-cols-[420px_1fr] items-center">
             {/* Interactive 3D Card — drag to rotate, scroll to zoom */}
             <div className="relative max-w-sm mx-auto">
@@ -193,7 +193,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* ══════════════════════════════════════════════════════
@@ -212,18 +212,21 @@ export default function HomePage() {
         </div>
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-16">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-orange-500 font-semibold mb-3">
-              Features
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
-              Built Different
-            </h2>
-            <p className="mt-3 text-sm text-zinc-500 max-w-md mx-auto">
-              Every feature designed to make trading cards faster, safer, and more beautiful.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-orange-500 font-semibold mb-3">
+                Features
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
+                Built Different
+              </h2>
+              <p className="mt-3 text-sm text-zinc-500 max-w-md mx-auto">
+                Every feature designed to make trading cards faster, safer, and more beautiful.
+              </p>
+            </div>
+          </ScrollReveal>
 
+          <ScrollReveal yOffset={80} start={0.9}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {BENTO_PANELS.map((panel, panelIdx) => {
               /* The first panel (3D Visualization) gets the orange pop treatment */
@@ -368,6 +371,7 @@ export default function HomePage() {
               );
             })}
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -381,7 +385,7 @@ export default function HomePage() {
           <img src="https://images.pokemontcg.io/base1/4.png" alt="" loading="lazy" aria-hidden="true" draggable={false} className="w-full" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
+        <ScrollReveal className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10" yOffset={40}>
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-sm font-bold uppercase tracking-[0.2em]">Browse Categories</h2>
             <button className="flex items-center gap-1 text-xs text-orange-500 hover:text-orange-400 transition-colors cursor-pointer group">
@@ -404,91 +408,13 @@ export default function HomePage() {
               );
             })}
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 5 — HOW IT WORKS: Stepper
+          SECTION 5 — HOW IT WORKS: Scroll-Driven Product Demo
       ══════════════════════════════════════════════════════ */}
-      <section className="py-28 border-t border-white/[0.03] overflow-hidden relative bg-[#0B0A09]">
-        {/* Warm ambient glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse,_rgba(249,115,22,0.07),_transparent_60%)] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[radial-gradient(circle,_rgba(234,88,12,0.04),_transparent_60%)] pointer-events-none" />
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-20">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-orange-500 font-semibold mb-3">
-              Simple Process
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
-              Sell a Card in 3 Steps
-            </h2>
-          </div>
-
-          <div className="relative">
-            <div className="grid gap-8 md:grid-cols-3">
-              {[
-                {
-                  icon: Camera,
-                  step: "01",
-                  title: "Snap a Photo",
-                  desc: "Take a photo of your card. AI identifies it instantly, pulling set info, rarity, and current market pricing.",
-                  glow: "group-hover:shadow-orange-500/20",
-                  isHighlight: false,
-                  tilt: "rotate-[-1.5deg]",
-                },
-                {
-                  icon: Eye,
-                  step: "02",
-                  title: "Review & Price",
-                  desc: "See real-time comps across the market. Set your price with data. Your card gets a 3D showcase automatically.",
-                  glow: "group-hover:shadow-orange-500/30",
-                  isHighlight: true,
-                  tilt: "rotate-[1deg]",
-                },
-                {
-                  icon: DollarSign,
-                  step: "03",
-                  title: "Get Paid",
-                  desc: "Card sells, we handle escrow + shipping label. Funds released after buyer confirms receipt.",
-                  glow: "group-hover:shadow-green-500/20",
-                  isHighlight: false,
-                  tilt: "rotate-[-0.5deg]",
-                },
-              ].map((item) => (
-                <div key={item.step} className={`group text-center relative ${item.tilt} transition-all duration-500 hover:rotate-0`}>
-                  {/* Large background step number */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[120px] font-black text-white/[0.03] leading-none pointer-events-none select-none z-0">
-                    {item.step}
-                  </div>
-
-                  {/* Step card */}
-                  <div className={`relative rounded-2xl border p-8 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl ${item.glow} ${item.isHighlight ? "border-orange-500/30 bg-gradient-to-b from-orange-500/[0.08] to-transparent shadow-lg shadow-orange-500/10 scale-[1.03]" : "border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04]"}`}>
-                    {/* Orange circle icon with animated glow ring */}
-                    <div className={`relative z-10 mx-auto flex h-20 w-20 items-center justify-center rounded-full mb-6 shadow-lg transition-all duration-500 group-hover:scale-110 ${item.isHighlight ? "bg-orange-500 shadow-orange-500/40 group-hover:shadow-orange-500/60" : "bg-orange-500 shadow-orange-500/25 group-hover:shadow-orange-500/50"}`}>
-                      {/* Glow ring */}
-                      <div className="absolute inset-0 rounded-full bg-orange-500/20 animate-ping opacity-0 group-hover:opacity-30" style={{ animationDuration: "2s" }} />
-                      <item.icon className="h-7 w-7 text-black" />
-                    </div>
-                    <p className={`text-[10px] uppercase tracking-[0.2em] font-bold mb-2 ${item.isHighlight ? "text-orange-400" : "text-orange-500"}`}>
-                      Step {item.step}
-                    </p>
-                    <h3 className="font-black text-base uppercase tracking-wide mb-3">{item.title}</h3>
-                    <p className="text-sm text-zinc-500 leading-relaxed max-w-xs mx-auto">{item.desc}</p>
-
-                    {/* Highlight badge */}
-                    {item.isHighlight && (
-                      <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-orange-400">
-                        <Zap className="h-3 w-3" /> Most Popular
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ScrollProductDemo />
 
       {/* ══════════════════════════════════════════════════════
           SECTION 6 — CTA
@@ -513,7 +439,7 @@ export default function HomePage() {
           <img src="https://images.pokemontcg.io/base1/2.png" alt="" loading="lazy" aria-hidden="true" draggable={false} className="w-full drop-shadow-2xl" />
         </div>
 
-        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 relative z-10">
+        <ScrollReveal className="mx-auto max-w-2xl px-4 text-center sm:px-6 relative z-10" yOffset={50} scaleFrom={0.95}>
           <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tight rotate-[-1deg]">
             Ready to Trade{" "}
             <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-600 bg-clip-text text-transparent">
@@ -551,7 +477,7 @@ export default function HomePage() {
               <span className="font-bold text-white">2,400+</span> sellers in the beta
             </p>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* ══════════════════════════════════════════════════════

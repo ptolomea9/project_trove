@@ -1,12 +1,12 @@
 import { Header } from "@/components/layout/Header";
-import { DiagonalCarousel } from "@/components/cards/DiagonalCarousel";
+import { HeroSequence } from "@/components/hero/HeroSequence";
 import { HoverCard3D } from "@/components/cards/HoverCard3D";
+import { InteractiveCard } from "@/components/cards/InteractiveCard";
 import { GradientButton } from "@/components/ui/gradient-button";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Search,
-  Gem,
   Zap,
   Shield,
   TrendingDown,
@@ -103,108 +103,9 @@ export default function HomePage() {
       <Header />
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 1 — HERO: Interactive Diagonal Card Carousel
+          SECTION 1 — HERO: Sequenced Animation
       ══════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden">
-        {/* Background gradients — cinematic orange-to-purple diagonal */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-600/20 via-black to-purple-900/20" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_rgba(249,115,22,0.18),_transparent_50%)]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_rgba(147,51,234,0.12),_transparent_50%)]" />
-
-        {/* Interactive diagonal carousel — full width, cards with 3D hover */}
-        <div className="relative z-0">
-          <DiagonalCarousel />
-        </div>
-
-        {/* Content overlay — positioned over the carousel */}
-        <div className="absolute inset-0 z-30 flex items-center pointer-events-none">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 w-full">
-            <div className="max-w-xl pointer-events-auto">
-              {/* Beta pill */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 backdrop-blur-sm px-4 py-1.5 mb-8">
-                <div className="relative h-2 w-2">
-                  <div className="absolute inset-0 rounded-full bg-orange-500 animate-ping opacity-75" />
-                  <div className="relative h-2 w-2 rounded-full bg-orange-500" />
-                </div>
-                <span className="text-xs font-semibold text-orange-400 uppercase tracking-[0.2em]">
-                  Beta — Early Access
-                </span>
-              </div>
-
-              <h1 className="text-5xl font-black tracking-tight leading-[1.02] sm:text-6xl lg:text-7xl uppercase drop-shadow-2xl">
-                The marketplace<br />
-                where cards{" "}
-                <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-                  come alive.
-                </span>
-              </h1>
-
-              <p className="mt-6 max-w-lg text-base sm:text-lg text-zinc-300 leading-relaxed drop-shadow-lg">
-                Upload a card. Watch it transform into a cinematic 3D showcase.
-                Trade with the lowest fees in the market.
-              </p>
-
-              {/* Hero search */}
-              <div className="mt-10 flex max-w-lg gap-2">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600" />
-                  <Input
-                    type="search"
-                    placeholder="Search any card..."
-                    className="h-12 pl-11 text-sm bg-black/60 backdrop-blur-md border-white/10 placeholder:text-zinc-600 focus:border-orange-500/50 rounded-lg"
-                  />
-                </div>
-                <Button className="h-12 px-6 bg-orange-500 text-black hover:bg-orange-400 font-bold cursor-pointer rounded-lg">
-                  Search
-                </Button>
-              </div>
-
-              {/* Quick search tags */}
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["Charizard", "Black Lotus", "LeBron Rookie", "Lugia VSTAR"].map(
-                  (term) => (
-                    <button
-                      key={term}
-                      className="rounded-full border border-white/10 bg-black/40 backdrop-blur-sm px-3 py-1 text-[11px] text-zinc-400 transition-all hover:border-orange-500/40 hover:text-zinc-200 hover:bg-orange-500/10 cursor-pointer"
-                    >
-                      {term}
-                    </button>
-                  )
-                )}
-              </div>
-
-              {/* CTAs */}
-              <div className="mt-8 flex items-center gap-4">
-                <GradientButton className="text-sm">
-                  Start Selling <ArrowRight className="ml-2 h-4 w-4" />
-                </GradientButton>
-                <GradientButton variant="variant" className="text-sm">
-                  Browse Cards
-                </GradientButton>
-              </div>
-
-              {/* Fee comparison strip */}
-              <div className="mt-10 flex items-center gap-6 sm:gap-8 bg-black/40 backdrop-blur-sm rounded-xl border border-white/5 p-4 max-w-md">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-1">Trove</p>
-                  <p className="text-3xl font-black text-orange-500 tabular-nums">3–5%</p>
-                </div>
-                <div className="h-10 w-px bg-white/10" />
-                <div className="flex gap-6 opacity-40">
-                  <div>
-                    <p className="text-[10px] text-zinc-600 uppercase tracking-wider">TCGPlayer</p>
-                    <p className="text-lg font-bold line-through tabular-nums text-zinc-500">13.25%</p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-zinc-600 uppercase tracking-wider">eBay</p>
-                    <p className="text-lg font-bold line-through tabular-nums text-zinc-500">13.55%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSequence />
 
       {/* ══════════════════════════════════════════════════════
           SECTION 2 — FEATURED CARD SHOWCASE (CSS 3D)
@@ -230,16 +131,15 @@ export default function HomePage() {
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
           <div className="grid gap-12 lg:grid-cols-[420px_1fr] items-center">
-            {/* CSS 3D Card */}
-            <div className="flex justify-center relative">
+            {/* Interactive 3D Card — drag to rotate, scroll to zoom */}
+            <div className="relative max-w-sm mx-auto">
               {/* Glow ring behind card */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-64 h-80 rounded-3xl bg-orange-500/10 blur-3xl" />
+                <div className="w-72 h-96 rounded-3xl bg-orange-500/10 blur-3xl" />
               </div>
-              <HoverCard3D
+              <InteractiveCard
                 imageUrl="/cards/demo-lugia.png"
                 isHolo
-                size="lg"
               />
             </div>
 
@@ -313,7 +213,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════
           SECTION 3 — ANIMATED BENTO GRID
       ══════════════════════════════════════════════════════ */}
-      <section className="py-28 border-t border-white/[0.03] overflow-hidden relative bg-gradient-to-b from-[#0A0A0A] via-[#0D0B08] to-[#0A0A0A]">
+      <section className="py-28 border-t border-white/[0.03] relative bg-gradient-to-b from-[#0A0A0A] via-[#0D0B08] to-[#0A0A0A]">
         {/* Section ambient glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse,_rgba(249,115,22,0.06),_transparent_70%)] pointer-events-none" />
         {/* Warm side glow */}
@@ -346,10 +246,10 @@ export default function HomePage() {
               const rotations = ["rotate-[-1.5deg]", "rotate-[1deg]", "rotate-[-0.5deg]", "rotate-[1.5deg]", "rotate-[-1deg]", "rotate-[0.5deg]"];
               const hoverRotations = ["hover:rotate-[0.5deg]", "hover:rotate-[-0.5deg]", "hover:rotate-[0.5deg]", "hover:rotate-[-0.5deg]", "hover:rotate-[0.5deg]", "hover:rotate-[-0.5deg]"];
               return (
-                <div
+                <GlowCard
                   key={panel.title}
-                  className={`group relative rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:-translate-y-1 ${panel.span} min-h-[260px] ${rotations[panelIdx]} ${hoverRotations[panelIdx]} ${isPopPanel ? "hover:shadow-orange-500/30" : "hover:shadow-black/50"}`}
-                  style={{ perspective: "800px" }}
+                  glowColor={isPopPanel ? "orange" : "purple"}
+                  className={`group transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:-translate-y-1 ${panel.span} min-h-[260px] ${rotations[panelIdx]} ${hoverRotations[panelIdx]} ${isPopPanel ? "hover:shadow-orange-500/30" : "hover:shadow-black/50"} !p-0 overflow-hidden`}
                 >
                   {/* Background: pop panel gets bright orange, others keep gradient */}
                   {isPopPanel ? (
@@ -478,7 +378,7 @@ export default function HomePage() {
                       </div>
                     )}
                   </div>
-                </div>
+                </GlowCard>
               );
             })}
           </div>
@@ -540,27 +440,6 @@ export default function HomePage() {
           </div>
 
           <div className="relative">
-            {/* Connecting line with dots */}
-            <div className="absolute top-16 left-[16.66%] right-[16.66%] hidden md:block z-0">
-              {/* Base line */}
-              <div className="h-[2px] w-full relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/40 via-orange-500/20 to-orange-500/40" />
-                {/* Animated glow sweep */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(249,115,22,0.7) 50%, transparent 100%)",
-                    backgroundSize: "200% 100%",
-                    animation: "slideCards 4s linear infinite",
-                  }}
-                />
-              </div>
-              {/* Dots at connection points */}
-              <div className="absolute top-1/2 left-0 -translate-y-1/2 w-3 h-3 rounded-full bg-orange-500 shadow-lg shadow-orange-500/50" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-orange-500 shadow-lg shadow-orange-500/50" />
-              <div className="absolute top-1/2 right-0 -translate-y-1/2 w-3 h-3 rounded-full bg-orange-500 shadow-lg shadow-orange-500/50" />
-            </div>
-
             <div className="grid gap-8 md:grid-cols-3">
               {[
                 {

@@ -47,3 +47,11 @@ coverage/
 # Misc
 *.pem
 .git-trove
+
+# Large media / reference files
+*.mp4
+*.png
+reference-frames/
+
+# Playwright MCP
+.playwright-mcp/

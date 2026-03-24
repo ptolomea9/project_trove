@@ -1,42 +1,31 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { TextureLoader, type Mesh, MathUtils } from "three";
+import { TextureLoader, type Group } from "three";
 import { RoundedBox } from "@react-three/drei";
 
 interface TradingCardProps {
   imageUrl: string;
   backImageUrl?: string;
   isHolo?: boolean;
-  autoRotate?: boolean;
 }
 
 export function TradingCard({
   imageUrl,
   backImageUrl,
   isHolo = false,
-  autoRotate = true,
 }: TradingCardProps) {
-  const meshRef = useRef<Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-
+  const groupRef = useRef<Group>(null);
   const frontTexture = useLoader(TextureLoader, imageUrl);
   const backTexture = backImageUrl
     ? useLoader(TextureLoader, backImageUrl)
     : null;
 
-  useFrame((_, delta) => {
-    if (!meshRef.current || !autoRotate) return;
-
-    // Gentle floating animation
-    meshRef.current.position.y =
-      Math.sin(Date.now() * 0.001) * 0.05;
-
-    // Slow auto-rotation
-    if (!hovered) {
-      meshRef.current.rotation.y += delta * 0.3;
-    }
+  // Continuous floating bob
+  useFrame(() => {
+    if (!groupRef.current) return;
+    groupRef.current.position.y = Math.sin(Date.now() * 0.0015) * 0.08;
   });
 
   // Standard trading card aspect ratio: 2.5 x 3.5 inches
@@ -45,14 +34,11 @@ export function TradingCard({
   const depth = 0.04;
 
   return (
-    <group>
+    <group ref={groupRef}>
       <RoundedBox
-        ref={meshRef}
         args={[width, height, depth]}
         radius={0.08}
         smoothness={4}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
       >
         {/* Front face */}
         <meshPhysicalMaterial
@@ -74,27 +60,11 @@ export function TradingCard({
           roughness={0.4}
           metalness={0.05}
         />
-        {/* Edge material */}
-        <meshPhysicalMaterial
-          attach="material-0"
-          color="#e8e0d4"
-          roughness={0.6}
-        />
-        <meshPhysicalMaterial
-          attach="material-1"
-          color="#e8e0d4"
-          roughness={0.6}
-        />
-        <meshPhysicalMaterial
-          attach="material-2"
-          color="#e8e0d4"
-          roughness={0.6}
-        />
-        <meshPhysicalMaterial
-          attach="material-3"
-          color="#e8e0d4"
-          roughness={0.6}
-        />
+        {/* Edges - warm white card stock */}
+        <meshPhysicalMaterial attach="material-0" color="#e8e0d4" roughness={0.6} />
+        <meshPhysicalMaterial attach="material-1" color="#e8e0d4" roughness={0.6} />
+        <meshPhysicalMaterial attach="material-2" color="#e8e0d4" roughness={0.6} />
+        <meshPhysicalMaterial attach="material-3" color="#e8e0d4" roughness={0.6} />
       </RoundedBox>
     </group>
   );

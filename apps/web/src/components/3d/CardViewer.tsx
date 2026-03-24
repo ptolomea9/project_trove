@@ -3,9 +3,10 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
-  OrbitControls,
+  PresentationControls,
   Environment,
   ContactShadows,
+  Float,
 } from "@react-three/drei";
 import {
   EffectComposer,
@@ -29,65 +30,66 @@ function CardScene({
   return (
     <>
       {/* Lighting */}
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.3} />
       <spotLight
         position={[5, 5, 5]}
         angle={0.25}
         penumbra={1}
-        intensity={1.5}
+        intensity={2}
         castShadow
-        shadow-mapSize={1024}
       />
       <spotLight
-        position={[-5, 3, -5]}
+        position={[-3, 4, -4]}
         angle={0.3}
         penumbra={1}
-        intensity={0.5}
-        color="#7C5CFC"
+        intensity={0.8}
+        color="#CA8A04"
       />
-      <pointLight position={[0, -3, 2]} intensity={0.3} color="#00D4AA" />
+      <pointLight position={[0, -3, 3]} intensity={0.4} color="#CA8A04" />
 
-      {/* Card */}
-      <Suspense fallback={null}>
-        <TradingCard
-          imageUrl={imageUrl}
-          backImageUrl={backImageUrl}
-          isHolo={isHolo}
-          autoRotate
-        />
-      </Suspense>
+      <PresentationControls
+        global
+        snap
+        rotation={[0.1, 0.4, 0]}
+        polar={[-Math.PI / 4, Math.PI / 4]}
+        azimuth={[-Math.PI / 4, Math.PI / 4]}
+      >
+        <Float
+          rotationIntensity={0.4}
+          floatIntensity={0.6}
+          speed={2}
+        >
+          <Suspense fallback={null}>
+            <TradingCard
+              imageUrl={imageUrl}
+              backImageUrl={backImageUrl}
+              isHolo={isHolo}
+            />
+          </Suspense>
+        </Float>
+      </PresentationControls>
 
       {/* Environment reflections */}
       <Environment preset="studio" />
 
       {/* Ground shadow */}
       <ContactShadows
-        position={[0, -2, 0]}
-        opacity={0.4}
-        scale={8}
+        position={[0, -2.2, 0]}
+        opacity={0.5}
+        scale={6}
         blur={2.5}
         far={4}
-      />
-
-      {/* Camera controls */}
-      <OrbitControls
-        enablePan={false}
-        enableZoom
-        minDistance={3}
-        maxDistance={8}
-        minPolarAngle={Math.PI / 6}
-        maxPolarAngle={Math.PI / 1.5}
-        autoRotate={false}
+        color="#CA8A04"
       />
 
       {/* Post-processing */}
       <EffectComposer>
         <Bloom
-          luminanceThreshold={0.8}
+          luminanceThreshold={0.7}
           luminanceSmoothing={0.9}
-          intensity={0.3}
+          intensity={0.4}
         />
-        <Vignette eskil={false} offset={0.1} darkness={0.5} />
+        <Vignette eskil={false} offset={0.1} darkness={0.6} />
       </EffectComposer>
     </>
   );
@@ -102,10 +104,9 @@ export function CardViewer({
   return (
     <div className={`w-full h-full min-h-[400px] ${className}`}>
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
+        camera={{ position: [0, 0, 5.5], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
-        frameloop="always"
       >
         <CardScene
           imageUrl={imageUrl}

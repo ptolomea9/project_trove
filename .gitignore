@@ -51,6 +51,7 @@ coverage/
 # Large media / reference files
 *.mp4
 *.png
+!apps/web/public/**/*.png
 reference-frames/
 
 # Playwright MCP

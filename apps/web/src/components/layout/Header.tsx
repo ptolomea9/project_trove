@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { GradientButton } from "@/components/ui/gradient-button";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-black/90 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-4 px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0 cursor-pointer">
@@ -25,7 +26,7 @@ export function Header() {
             <Link
               key={item}
               href={`/${item.toLowerCase()}`}
-              className="rounded-md px-3 py-1.5 text-xs font-medium text-zinc-400 transition-colors hover:text-white hover:bg-white/5 cursor-pointer"
+              className="rounded-full px-4 py-1.5 text-xs font-medium text-zinc-400 transition-colors hover:text-white hover:bg-white/[0.06] cursor-pointer"
             >
               {item}
             </Link>
@@ -45,7 +46,7 @@ export function Header() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2 shrink-0 ml-auto lg:ml-0">
+        <div className="flex items-center gap-3 shrink-0 ml-auto lg:ml-0">
           <Button
             variant="ghost"
             size="sm"
@@ -53,12 +54,9 @@ export function Header() {
           >
             Sign In
           </Button>
-          <Button
-            size="sm"
-            className="h-8 px-4 text-xs font-semibold bg-orange-500 text-black hover:bg-orange-400 cursor-pointer"
-          >
+          <GradientButton className="min-w-0 px-5 py-2 text-xs cursor-pointer">
             Get Started
-          </Button>
+          </GradientButton>
           <Button variant="ghost" size="icon" className="h-8 w-8 md:hidden cursor-pointer">
             <Menu className="h-4 w-4" />
           </Button>

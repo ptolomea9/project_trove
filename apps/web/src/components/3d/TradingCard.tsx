@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
-import { useFrame, useLoader } from "@react-three/fiber";
+import { useRef, useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
 import { TextureLoader, type Group } from "three";
-import { RoundedBox } from "@react-three/drei";
+import { RoundedBox, useTexture } from "@react-three/drei";
 
 interface TradingCardProps {
   imageUrl: string;
@@ -17,9 +17,9 @@ export function TradingCard({
   isHolo = false,
 }: TradingCardProps) {
   const groupRef = useRef<Group>(null);
-  const frontTexture = useLoader(TextureLoader, imageUrl);
+  const frontTexture = useTexture(imageUrl);
   const backTexture = backImageUrl
-    ? useLoader(TextureLoader, backImageUrl)
+    ? useTexture(backImageUrl)
     : null;
 
   // Continuous floating bob

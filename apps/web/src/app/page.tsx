@@ -110,24 +110,10 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════
           SECTION 2 — FEATURED CARD SHOWCASE (CSS 3D)
       ══════════════════════════════════════════════════════ */}
-      <section className="relative border-t border-white/[0.03] bg-[#0A0A0A] py-28 overflow-hidden">
+      <section className="relative bg-[#0A0A0A] py-28 overflow-hidden">
         {/* Ambient glows */}
         <div className="absolute top-1/2 left-[20%] -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(249,115,22,0.07),_transparent_60%)] pointer-events-none" />
         <div className="absolute top-1/3 right-[10%] w-[400px] h-[400px] bg-[radial-gradient(circle,_rgba(6,182,212,0.04),_transparent_60%)] pointer-events-none" />
-
-        {/* Scattered decorative cards */}
-        <div className="absolute -top-8 right-[8%] w-28 opacity-20 rotate-[12deg] pointer-events-none select-none z-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.pokemontcg.io/base1/4.png" alt="" loading="lazy" aria-hidden="true" draggable={false} className="w-full drop-shadow-2xl" />
-        </div>
-        <div className="absolute bottom-[-40px] left-[5%] w-24 opacity-15 -rotate-[15deg] pointer-events-none select-none z-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.pokemontcg.io/base1/15.png" alt="" loading="lazy" aria-hidden="true" draggable={false} className="w-full drop-shadow-2xl" />
-        </div>
-        <div className="absolute top-[15%] right-[2%] w-20 opacity-10 rotate-[22deg] pointer-events-none select-none z-0 hidden lg:block">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.pokemontcg.io/base1/2.png" alt="" loading="lazy" aria-hidden="true" draggable={false} className="w-full drop-shadow-2xl" />
-        </div>
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
           <div className="grid gap-12 lg:grid-cols-[420px_1fr] items-center">

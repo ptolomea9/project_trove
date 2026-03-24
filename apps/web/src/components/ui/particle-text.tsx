@@ -28,7 +28,7 @@ interface ParticleTextProps {
 export function ParticleText({
   text = "COME ALIVE.",
   className = "",
-  color = { r: 249, g: 115, b: 22 }, // orange-500
+  color = { r: 249, g: 115, b: 22 },
   onComplete,
   delay = 0,
 }: ParticleTextProps) {
@@ -41,7 +41,7 @@ export function ParticleText({
     if (!canvas || startedRef.current) return
     startedRef.current = true
 
-    const ctx = canvas.getContext("2d")!
+    const ctx = canvas.getContext("2d", { alpha: true })!
     const dpr = Math.min(window.devicePixelRatio, 2)
     const rect = canvas.getBoundingClientRect()
 
@@ -52,46 +52,59 @@ export function ParticleText({
     const w = rect.width
     const h = rect.height
 
-    // Render text offscreen to get pixel data
+    // Render text offscreen — match EXACT same font as the CSS BubbleText
     const offscreen = document.createElement("canvas")
     offscreen.width = w
     offscreen.height = h
     const offCtx = offscreen.getContext("2d")!
 
-    // Match the hero font style
-    const fontSize = Math.min(w * 0.18, 120)
+    // Match Tailwind responsive sizes exactly:
+    // text-5xl = 3rem (48px), sm:text-6xl = 3.75rem (60px), lg:text-7xl = 4.5rem (72px)
+    let fontSize: number
+    if (window.innerWidth >= 1024) {
+      fontSize = 72
+    } else if (window.innerWidth >= 640) {
+      fontSize = 60
+    } else {
+      fontSize = 48
+    }
+
+    // Use the project font (Chakra Petch) with matching weight and tracking
+    const fontFamily = getComputedStyle(document.documentElement)
+      .getPropertyValue("--font-chakra")
+      .trim()
+    const font = `900 ${fontSize}px ${fontFamily || '"Chakra Petch"'}, system-ui, sans-serif`
+
     offCtx.fillStyle = "white"
-    offCtx.font = `900 ${fontSize}px system-ui, -apple-system, sans-serif`
-    offCtx.textAlign = "center"
+    offCtx.font = font
+    offCtx.textAlign = "left"
     offCtx.textBaseline = "middle"
-    offCtx.fillText(text, w / 2, h / 2)
+    // Apply tracking-tight (-0.025em) to match CSS
+    offCtx.letterSpacing = `${fontSize * -0.025}px`
+    offCtx.fillText(text, 0, h / 2 - 2)
 
     const imageData = offCtx.getImageData(0, 0, w, h)
     const pixels = imageData.data
-    const step = 4 // pixel sampling density
+    const step = 2
 
-    // Create particles from text pixels
     const particles: Particle[] = []
     for (let y = 0; y < h; y += step) {
       for (let x = 0; x < w; x += step) {
         const i = (y * w + x) * 4
         if (pixels[i + 3] > 128) {
-          // Spawn from random positions around the edges
-          const angle = Math.random() * Math.PI * 2
-          const dist = Math.max(w, h)
           particles.push({
-            x: w / 2 + Math.cos(angle) * dist * (0.5 + Math.random()),
-            y: h / 2 + Math.sin(angle) * dist * (0.5 + Math.random()),
-            vx: 0,
-            vy: 0,
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 2,
+            vy: (Math.random() - 0.5) * 2,
             tx: x,
             ty: y,
-            size: Math.random() * 2 + 1,
+            size: Math.random() * 1.5 + 1.5,
             r: color.r + Math.floor(Math.random() * 40 - 20),
             g: color.g + Math.floor(Math.random() * 30 - 15),
             b: color.b + Math.floor(Math.random() * 20 - 10),
-            speed: Math.random() * 4 + 3,
-            force: Math.random() * 0.04 + 0.02,
+            speed: Math.random() * 6 + 5,
+            force: Math.random() * 0.06 + 0.04,
           })
         }
       }
@@ -114,7 +127,6 @@ export function ParticleText({
           p.y = p.ty
           settled++
         } else {
-          // Steering towards target
           const proximity = dist < 80 ? dist / 80 : 1
           const ax = (dx / dist) * p.speed * proximity - p.vx
           const ay = (dy / dist) * p.speed * proximity - p.vy
@@ -125,7 +137,6 @@ export function ParticleText({
           }
           p.x += p.vx
           p.y += p.vy
-          // Damping
           p.vx *= 0.95
           p.vy *= 0.95
         }
@@ -134,20 +145,35 @@ export function ParticleText({
         ctx.fillRect(p.x, p.y, p.size, p.size)
       }
 
-      // Fire onComplete when 95% of particles have settled
       if (!completeFired && settled > particles.length * 0.95) {
         completeFired = true
         onComplete?.()
       }
 
-      rafRef.current = requestAnimationFrame(animate)
+      if (settled < particles.length) {
+        rafRef.current = requestAnimationFrame(animate)
+      }
     }
 
     rafRef.current = requestAnimationFrame(animate)
   }, [text, color, onComplete])
 
   useEffect(() => {
-    const timer = setTimeout(init, delay)
+    // Wait for fonts to load before initializing
+    const start = () => {
+      const timer = setTimeout(init, delay)
+      return timer
+    }
+
+    let timer: ReturnType<typeof setTimeout>
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        timer = start()
+      })
+    } else {
+      timer = start()
+    }
+
     return () => {
       clearTimeout(timer)
       cancelAnimationFrame(rafRef.current)
@@ -158,7 +184,7 @@ export function ParticleText({
     <canvas
       ref={canvasRef}
       className={`w-full ${className}`}
-      style={{ height: "clamp(60px, 12vw, 140px)" }}
+      style={{ height: "100%", background: "transparent" }}
     />
   )
 }
